@@ -29,13 +29,12 @@
     <!-- put a div element where you want the map to be -->
     <!-- 'div' just tags a section in the HTML document -->
     <!-- you can define how things inside a 'div' tag get formatted in the CSS -->
-    <h1> RCD Map </h1>
+    <h1> Gold Ridge RCD Project Map </h1>
     <div id="RCD_map" style="width: 600px; height: 400px;"></div>
 
     <script>
 
-        // TODO: calculate lat_long from center of coordinates 
-
+        // TODO: calculate lat long instead of hardcoding it in 
         let goldridge_center_latlon = [38.401949, -122.886813];
         let zoom_level = 10; 
         var RCD_map = L.map('RCD_map').setView(goldridge_center_latlon, zoom_level);
@@ -50,17 +49,34 @@
             zoomOffset: -1
         }).addTo(RCD_map);
 
-        // RCD boundaries
+        // convert RCD boundaries from string to Object 
         var RCD_boundaries = JSON.parse(RCD_Boundaries2);
 
         // filter only Gold Ridge's boundaries
         function just_one_RCD(feature, layer) {
-            return feature.properties.RCDNAME === "Gold Ridge"; //change to whatever RCD we want
+            return feature.properties.RCDNAME === "Gold Ridge"; //TODO: change to whatever RCD we want
         }
-        // add RCD boundaries         
-        
+        // add single RCD boundary to map 
         L.geoJSON(RCD_boundaries, {filter: just_one_RCD}).addTo(RCD_map);
-                
-    
+                    
+        // parse Gold Ridge's project descriptions 
+        var goldridge_projects = JSON.parse(GoldRidge_projects);
+
+        //create markers for all of the Project locations 
+        // TODO: for now, we put projects with no location at the Gold Ridge office - they overlap and you can't see them 
+        // and it's not clear that that's what we're doing - fix it later 
+        let all_project_points = []; 
+        for (let i = 0; i < goldridge_projects.length; i++){
+            let latlon; 
+            if (goldridge_projects[i].Latitude && goldridge_projects[i].Longitude){
+                latlon = [goldridge_projects[i].Latitude, goldridge_projects[i].Longitude];
+            }else{
+                latlon = goldridge_center_latlon;
+            }
+            all_project_points[i] = L.marker(latlon).bindPopup(goldridge_projects[i].ProjectName);
+        }
+
+        var all_projects = L.layerGroup(all_project_points).addTo(RCD_map); 
+
     </script>
 </body>
