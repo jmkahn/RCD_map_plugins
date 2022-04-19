@@ -1,4 +1,4 @@
-// copypasted raw JSON from https:\/\/www.rcdprojects.org\/WebServices\/GetProjectsByOrganization\/JSON\/bcdb2d4b-5d7a-4e25-b2e2-7634453c80e8\/62
+// copypasted raw JSON from https://www.rcdprojects.org/WebServices/GetProjectsByOrganization/JSON/bcdb2d4b-5d7a-4e25-b2e2-7634453c80e8/62
 // removed unescaped newlines (\n -> )
 // replace tabs with single spaces ( I don't know if this step was necessary)
 // replace all interior ' with escaped (' -> \' )
