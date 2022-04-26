@@ -37,12 +37,9 @@
 
 <body>
 
-    <!-- put a div element where you want the map to be -->
-    <!-- 'div' just tags a section in the HTML document -->
-    <!-- you can define how things inside a 'div' tag get formatted in the CSS -->
     <h1> Gold Ridge RCD Project Map </h1>
-    <div id="RCD_map" style="width: 600px; height: 400px;"></div>
 
+    <div id="RCD_map" style="width: 600px; height: 400px;"></div>
     <script>
 
         // TODO: calculate lat long instead of hardcoding it in 
@@ -74,7 +71,7 @@
         var goldridge_projects = JSON.parse(GoldRidge_projects);
 
         //create markers for all of the Project locations 
-        // TODO: for now, we put projects with no location at the Gold Ridge office - they overlap and you can't see them 
+        // TODO: for now, we put projects with no location at the center of the district - they overlap and you can't see them 
         // and it's not clear that that's what we're doing - fix it later 
         let all_project_points = []; 
         for (let i = 0; i < goldridge_projects.length; i++){
