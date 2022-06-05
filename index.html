@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        /* disables number spinner on numeric input */
+        /* for Chrome, Safari, Edge, Opera */
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        /* Firefox */
+        input[type=number] {
+            -moz-appearance: textfield;
+        }
+    </style>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.8.0/dist/leaflet.css"
+    integrity="sha512-hoalWLoI8r4UszCkZ5kL8vayOGVae1oxXe/2A4AO6J9+580uKHDO3JdHb7NzwwzK5xr/Fs0W40kiNHxM9vyTtQ=="
+    crossorigin=""/>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ"
+        crossorigin="anonymous"></script>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <!-- include Leaflet (map) library -->
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+        integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+        crossorigin=""></script>
+
+    <!-- load the boundaries for all RCDs
+    The file is hosted on Github Gist, but getting the content from https://statically.io/ -->
+    <script
+        src="https://cdn.statically.io/gist/jmkahn/6533a7e7eb4b2f3994881892dae9dae8/raw/1800f19f8b2a61a978d559e7df418f8feec69429/RCD_Boundaries.js"></script>
+
+    <script type="text/javascript" src="functions.js"></script>
+
+
+    <script>
+        // enable popovers in document
+        $(function () {
+            $('[data-toggle="popover"]').popover()
+        })    
+    </script>
+    <title>RCD Map Plugin</title>
+</head>
+
+<body>
+
+    <div class="jumbotron text-center">
+        <h1>RCD Map Plug in</h1>
+        <p>Add an interactive project map to your website</p>
+    </div>
+
+    <div class="container">
+        <div class="page-header">
+            <h1>Customize your map </h1>
+        </div>
+
+        <div class="row">
+
+            <div class="col-sm-4">
+                <section id="Forms">
+                    <h3>Enter the following information to create your map plug in</h3>
+                    <form class="form-horizontal">
+
+                        <label class="control-label" for="rcd-name" data-toggle="popover"
+                            data-content="Some content inside the popover">RCD Name: </label>
+                        <select class="form-control" id="rcd-name">
+                            <option value="Alameda">Alameda</option>
+                            <option value="Alpine">Alpine</option>
+                            <option value="Amador">Amador</option>
+                            <option value="Antelope Valley">Antelope Valley</option>
+                            <option value="Bard">Bard</option>
+                            <option value="Butte">Butte</option>
+                            <option value="Cachuma">Cachuma</option>
+                            <option value="Calaveras">Calaveras</option>
+                            <option value="Coachella Valley">Coachella Valley</option>
+                            <option value="Coarsegold">Coarsegold</option>
+                            <option value="Coastal San Luis">Coastal San Luis</option>
+                            <option value="Columbia">Columbia</option>
+                            <option value="Colusa">Colusa</option>
+                            <option value="Contra Costa">Contra Costa</option>
+                            <option value="Del Norte">Del Norte</option>
+                            <option value="Dixon">Dixon</option>
+                            <option value="East Merced">East Merced</option>
+                            <option value="East Stanislaus">East Stanislaus</option>
+                            <option value="Eastern Kern">Eastern Kern</option>
+                            <option value="El Dorado County">El Dorado County</option>
+                            <option value="Excelesior-Kings River">Excelesior-Kings River</option>
+                            <option value="Fall River">Fall River</option>
+                            <option value="Feather River">Feather River</option>
+                            <option value="Firebaugh">Firebaugh</option>
+                            <option value="Florin">Florin</option>
+                            <option value="Georgetown Divide">Georgetown Divide</option>
+                            <option value="Glenn">Glenn</option>
+                            <option value="Gold Ridge">Gold Ridge</option>
+                            <option value="Goose Lake">Goose Lake</option>
+                            <option value="Grassland">Grassland</option>
+                            <option value="Greater San Diego">Greater San Diego</option>
+                            <option value="Guadalupe-Coyote">Guadalupe-Coyote</option>
+                            <option value="Gustine-Romero">Gustine-Romero</option>
+                            <option value="Honey Lake">Honey Lake</option>
+                            <option value="Humboldt">Humboldt</option>
+                            <option value="Imperial Irrigation Dst">Imperial Irrigation Dst</option>
+                            <option value="Imperial Irrigation Dst">Imperial Irrigation Dst</option>
+                            <option value="Inland Empire">Inland Empire</option>
+                            <option value="Inyo-Mono">Inyo-Mono</option>
+                            <option value="James">James</option>
+                            <option value="Kern Valley">Kern Valley</option>
+                            <option value="Lake County">Lake County</option>
+                            <option value="Lava Beds-Butte Valley">Lava Beds-Butte Valley</option>
+                            <option value="Loma Prieta">Loma Prieta</option>
+                            <option value="Los Banos">Los Banos</option>
+                            <option value="Lower Consumnes">Lower Consumnes</option>
+                            <option value="Madera Chowchilla">Madera Chowchilla</option>
+                            <option value="Marin">Marin</option>
+                            <option value="Mariposa">Mariposa</option>
+                            <option value="Mendocino">Mendocino</option>
+                            <option value="Mission">Mission</option>
+                            <option value="Mission">Mission</option>
+                            <option value="Modoc">Modoc</option>
+                            <option value="Mojave Desert">Mojave Desert</option>
+                            <option value="Mono">Mono</option>
+                            <option value="Monterey">Monterey</option>
+                            <option value="Napa">Napa</option>
+                            <option value="Nevada County">Nevada County</option>
+                            <option value="North West Kern">North West Kern</option>
+                            <option value="Palo Verde">Palo Verde</option>
+                            <option value="Panoche">Panoche</option>
+                            <option value="Pit">Pit</option>
+                            <option value="Placer">Placer</option>
+                            <option value="Riverside-Corona">Riverside-Corona</option>
+                            <option value="San Benito">San Benito</option>
+                            <option value="San Jacinto Basin">San Jacinto Basin</option>
+                            <option value="San Joaquin">San Joaquin</option>
+                            <option value="San Luis">San Luis</option>
+                            <option value="San Mateo">San Mateo</option>
+                            <option value="Santa Cruz">Santa Cruz</option>
+                            <option value="Santa Monica Mountains">Santa Monica Mountains</option>
+                            <option value="Shasta Valley">Shasta Valley</option>
+                            <option value="Sierra">Sierra</option>
+                            <option value="Sierra Valley">Sierra Valley</option>
+                            <option value="Siskiyou">Siskiyou</option>
+                            <option value="Sloughhouse">Sloughhouse</option>
+                            <option value="Solono">Solono</option>
+                            <option value="Sonoma">Sonoma</option>
+                            <option value="Suisun">Suisun</option>
+                            <option value="Sutter">Sutter</option>
+                            <option value="Tahoe">Tahoe</option>
+                            <option value="Tehachapi">Tehachapi</option>
+                            <option value="Tehama">Tehama</option>
+                            <option value="Tem_Elsinore-Murrieta-Anza">Tem_Elsinore-Murrieta-Anza</option>
+                            <option value="Tranquility">Tranquility</option>
+                            <option value="Trinity">Trinity</option>
+                            <option value="Tulare">Tulare</option>
+                            <option value="Tulare Lake">Tulare Lake</option>
+                            <option value="Tuolumne">Tuolumne</option>
+                            <option value="Upper Salinas-Las Tablas">Upper Salinas-Las Tablas</option>
+                            <option value="Upper San Luis Rey">Upper San Luis Rey</option>
+                            <option value="Ventura">Ventura</option>
+                            <option value="West Stanislaus">West Stanislaus</option>
+                            <option value="Western Shasta">Western Shasta</option>
+                            <option value="Westside">Westside</option>
+                            <option value="Yolo">Yolo</option>
+                            <option value="Yuba">Yuba</option>
+                        </select><br />
+
+                        <label for="organization-id" class="control-label"> Organization ID: </label>
+                        <input type="number" class="form-control" id="organization-id" name="organization-id"><br>
+                        <!-- <button type="button" class="btn btn-sm btn-outline-info" data-toggle="popover" title="Popover title" data-content="And here's some amazing content. It's very engaging. Right?">Help</button><br /> -->
+
+                        <!-- <label class="control-label" for="boundary-color">Select the color of the RCD Boundary:</label>
+                        <input type="color" class="form-control" id="boundary-color" name="boundary-color"><br /> -->
+
+
+                    </form>
+
+                </section>
+
+            </div>
+            <div class="col-sm-2"></div>
+            <div class="col-sm-6">
+                    <h3>View the results here. If it looks correct, select "print code" </h3>
+                <div id="RCD_map" style="width: 600px; height: 400px;">
+                    <script>
+                        // TODO: calculate lat long instead of hardcoding it in 
+                        let goldridge_center_latlon = [38.401949, -122.886813];
+                        let zoom_level = 10;
+                        var RCD_map = L.map('RCD_map').setView(goldridge_center_latlon, zoom_level);
+
+                        //base layer 
+                        var tiles = L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
+                            maxZoom: 18,
+                            attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, ' +
+                                'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+                            id: 'mapbox/streets-v11',
+                            tileSize: 512,
+                            zoomOffset: -1
+                        }).addTo(RCD_map);
+                    </script>
+                </div><br><br>
+                <button type="button" class="btn btn-success">Print Code</button>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
+
+// when choose an RCD 
+// find that RCD from the boundaries
+// draw it on the map and zoom to it 
