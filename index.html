@@ -63,10 +63,8 @@
                 <section id="Forms">
                     <h3>Enter the following information to create your map plug in</h3>
                     <form class="form-horizontal">
-
-                        <label class="control-label" for="rcd-name" data-toggle="popover"
-                            data-content="Some content inside the popover">RCD Name: </label>
-                        <select class="form-control" id="rcd-name" required>
+                        <label class="control-label" for="RCD_name">RCD Name: </label>
+                        <select class="form-control" id="RCD_name" required>
                             <option value="Alameda">Alameda</option>
                             <option value="Alpine">Alpine</option>
                             <option value="Amador">Amador</option>
@@ -165,60 +163,53 @@
                             <option value="Yolo">Yolo</option>
                             <option value="Yuba">Yuba</option>
                         </select><br />
-                        <label for="organization-id" class="control-label"> Organization ID: </label>
-                        <input type="number" class="form-control" id="organization-id" name="organization-id"><br>
+                        <label for="organization-id" class="control-label"> RCD's Organization ID: </label>
+                        <input type="number" class="form-control" id="organization-id" name="organization-id" placeholder="62"><br>
+                        Find the Organization ID by selecting <a href=https://www.rcdprojects.org/ProjectStewardOrganization/Index>your RCD in the Project Tracker</a> and finding the string of numbers at the end of the URL. 
+                        Example:  <img src="exOrgIDmarkedup.png" alt="View of how to find the Organization ID at the end of the URL" width="500" height="300">  (Please change the sizing of this image so that it looks nice with the columns)
                         <!-- <button type="button" class="btn btn-sm btn-outline-info" data-toggle="popover" title="Popover title" data-content="And here's some amazing content. It's very engaging. Right?">Help</button><br /> -->
 
                         <!-- <label class="control-label" for="boundary-color">Select the color of the RCD Boundary:</label>
                         <input type="color" class="form-control" id="boundary-color" name="boundary-color"><br /> -->
-
-
                     </form>
-
                 </section>
 
             </div>
             <div class="col-sm-2"></div>
             <div class="col-sm-6">
                     <h3>View the results here. If it looks correct, select "print code" </h3>
-                <div id="RCD_map" style="width: 600px; height: 400px;">
-                    <script>
-                        // TODO: calculate lat long instead of hardcoding it in 
-                        let goldridge_center_latlon = [38.401949, -122.886813];
-                        let zoom_level = 10;
-                        var RCD_map = L.map('RCD_map').setView(goldridge_center_latlon, zoom_level);
-
-                        //base layer 
-                        var tiles = L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
-                            maxZoom: 18,
-                            attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, ' +
-                                'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-                            id: 'mapbox/streets-v11',
-                            tileSize: 512,
-                            zoomOffset: -1
-                        }).addTo(RCD_map);
-                    </script>
-                </div><br><br>
+                <div id="RCD_map" style="width: 600px; height: 400px;"><script>renderBaseMap();</script></div><br><br>
                 <button type="button" class="btn btn-success">Print Code</button>
             </div>
         </div>
     </div>
 
     <script>
-        // // enable popovers in document
-        // $(function () {
-        //     $('[data-toggle="popover"]').popover()
-        // })  
-        
-        // update map when dropdown (which RCD) changed
-        $("#rcd-name" ).change(function() {
-            console.log( "Handler for .change() called." );
-        });
 
-        // get project data when Organization ID entered
-        $("#organization-id" ).change(function() {
-            console.log( "Handler for .change() called." );
+        document.querySelector('#RCD_name').addEventListener("change", function() {
+            console.log("rcd name in listener", this.value);
+            console.log("RCD_ map", document.getElementById("RCD_map"));
+            renderRCDBoundary(document.getElementById('RCD_map'), this.value); //okay, this.value works now, but not getting the map correctly
         });
+        // $( document ).ready(function(){
+        //     console.log("ready");
+
+        //     $("#RCD_name").change(console.log(this.value)); //FIXME: whatever javascript gibberish I'm trying to pass to renderRCDBoundary here is returning undefined
+
+        // }
+        // )
+        // // // enable popovers in document
+        // // $(function () {
+        // //     $('[data-toggle="popover"]').popover()
+        // // })  
+        
+        // // update map when dropdown (which RCD) changed
+        // $("#RCD_name").change(renderRCDBoundary($("#RCD_map"), ($(this).children("option:selected").val())));
+
+        // // get project data when Organization ID entered
+        // $("#organization-id" ).change(function() {
+        //     console.log( "Handler for .change() called." );
+        // });
     </script>
 </body>
 
