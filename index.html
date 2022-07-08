@@ -17,6 +17,7 @@
         input[type=number] {
             -moz-appearance: textfield;
         }
+
     </style>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -161,9 +162,12 @@
                             <option value="Yolo">Yolo</option>
                             <option value="Yuba">Yuba</option>
                         </select><br />
-                        <label for="organization-id" class="control-label"> RCD's Organization ID: </label>
-                        <input type="number" class="form-control" id="organization-id" name="organization-id"
+                        <label for="organization_id" class="control-label"> RCD's Organization ID: </label>
+                        <input type="number" class="form-control" id="organization_id" name="organization_id"
                             placeholder="62"><br>
+                        <button type="button" id="get_project_data" class="btn btn-primary btn-sm">Get Project Data</button><br>
+
+                        <h4>Help</h4>
                         Find the Organization ID by selecting <a
                             href=https://www.rcdprojects.org/ProjectStewardOrganization/Index>your RCD in the Project
                             Tracker</a> and finding the string of numbers at the end of the URL. Example: 
@@ -230,10 +234,14 @@
         // // })
 
         // get project data when Organization ID entered
-        $("#organization-id" ).change(function() {
-            console.log( "Handler for .change() called." );
+        document.querySelector('#get_project_data').addEventListener("click", function () { 
+            console.log('here is where we would add project data'); 
+            let org_id = document.getElementById("organization_id").value;
+            
+            render_project_data(org_id); 
+            //
+            console.log(org_id); //TODO: remove
         });
-
     </script>
 </body>
 
