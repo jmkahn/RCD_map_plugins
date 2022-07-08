@@ -1,9 +1,18 @@
-# Repository Contents 
+# Readme 
 
-## Applet
-- RCD_plugin.html is a draft of a mapping plugin that can be added to RCDs' websites. It will display a single RCD's boundaries, and markers for projects for which that RCD is the Primary RCD. When clicked on, the pop-ups will link to the website of that project. For now, this applet is hard-corded with information for Gold Ridge RCD. The intention is that this plugin will eventually make use of the RCD Project Tracker's web services and dynamically update. 
+Go here: [https://jmkahn.github.io/RCD_map_plugins/](https://jmkahn.github.io/RCD_map_plugins/).
+(still in progress)
 
-## Data 
-(The JSON and JS files contain the same information. The JS files are what the .html file actually uses, but the JSON files are easier to view clickably in the browser.)
-- GoldRidge_projects - all of the Projects assigned to Gold Ridge RCD (downloaded from the RCD Project Tracker's web services)
-- RCD_Boundaries2 - GeoJSON that gives the boundaries of all RCDs
+## Repository Contents
+### index.html 
+Web app to create a plug in map for your website showing live Project Tracker data for your RCD.  
+
+### functions.js 
+logic to update map in index.html
+
+### RCD_map.html 
+approximately the html that the web app will give you for your website 
+### Data 
+- GoldRidge_projects - all of the Projects assigned to Gold Ridge RCD (downloaded and formatted from the RCD Project Tracker's web services)
+- RCD_Boundaries2 - GeoJSON that gives the boundaries of all RCDs (The JSON and JS files contain the same information. The JS files are what the .html file actually uses, but the JSON files are easier to view clickably in the browser.)
+
