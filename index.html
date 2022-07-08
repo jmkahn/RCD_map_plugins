@@ -64,7 +64,7 @@
                 <section id="Forms">
                     <h3>Enter the following information to create your map plug in</h3>
                     <form class="form-horizontal">
-                        <label class="control-label" for="RCD_name">RCD Name: </label>
+                        <label class="control-label" for="RCD_name">RCD Name </label>
                         <select class="form-control" id="RCD_name" required>
                             <option value="Alameda">Alameda</option>
                             <option value="Alpine">Alpine</option>
@@ -162,27 +162,27 @@
                             <option value="Yolo">Yolo</option>
                             <option value="Yuba">Yuba</option>
                         </select><br />
-                        <label for="organization_id" class="control-label"> RCD's Organization ID: </label>
+
+                        <label class="control-label" for="boundary_color">Optional: Change the color of the RCD Boundary</label> 
+                        <input type="color" class="form-control form-control-color" id="boundary_color" name="boundary_color" value="#445cf3"><br /> 
+
+                        <label for="organization_id" class="control-label"> RCD's Organization ID </label>
                         <input type="number" class="form-control" id="organization_id" name="organization_id"
                             placeholder="62"><br>
-                        <button type="button" id="get_project_data" class="btn btn-primary btn-sm">Get Project Data</button><br>
 
+                        <button type="button" id="get_project_data" class="btn btn-primary btn-sm">Show Project Data</button><br>
                         <h4>Help</h4>
                         Find the Organization ID by selecting <a
                             href=https://www.rcdprojects.org/ProjectStewardOrganization/Index>your RCD in the Project
                             Tracker</a> and finding the string of numbers at the end of the URL. Example: 
                             <img class="img-fluid" src="exOrgIDmarkedupcropped.png"
                             alt="View of how to find the Organization ID at the end of the URL" width="500"
-                            height="300">
+                            height="300"><br><br>
                         <!-- Button trigger modal -->
                         <!-- <button type="button" id="open_org_ID_help" class="btn btn-secondary" data-toggle="modal" data-target="#org_ID_help">
                             Help finding Organization ID
                         </button> -->
 
-                        <!-- <button type="button" class="btn btn-sm btn-outline-info" data-toggle="popover" title="Popover title" data-content="And here's some amazing content. It's very engaging. Right?">Help</button><br /> -->
-
-                        <!-- <label class="control-label" for="boundary-color">Select the color of the RCD Boundary:</label> -->
-                        <!-- <input type="color" class="form-control" id="boundary-color" name="boundary-color"><br /> -->
                     </form>
                 </section>
 
@@ -223,24 +223,22 @@
     <script>
         //when an RCD is selected from drop down, show that RCD on the map preview
         document.querySelector('#RCD_name').addEventListener("change", function () {
-            render_RCD_boundary(this.value);
-        });
+            let color = document.getElementById("boundary_color").value;
 
-        // }
-        // )
-        // // // enable popovers in document
-        // // $(function () {
-        // //     $('[data-toggle="popover"]').popover()
-        // // })
+            update_RCD_boundaries(this.value, color);
+        });
 
         // get project data when Organization ID entered
         document.querySelector('#get_project_data').addEventListener("click", function () { 
-            console.log('here is where we would add project data'); 
             let org_id = document.getElementById("organization_id").value;
-            
             render_project_data(org_id); 
-            //
-            console.log(org_id); //TODO: remove
+        });
+
+        // change RCD Boundary color from input
+        document.querySelector('#boundary_color').addEventListener("change", function () {
+            if (typeof current_boundary !== 'undefined') {
+                set_boundary_color(this.value);
+            }
         });
     </script>
 </body>
