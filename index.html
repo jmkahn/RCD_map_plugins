@@ -23,12 +23,12 @@
         integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.8.0/dist/leaflet.css"
-    integrity="sha512-hoalWLoI8r4UszCkZ5kL8vayOGVae1oxXe/2A4AO6J9+580uKHDO3JdHb7NzwwzK5xr/Fs0W40kiNHxM9vyTtQ=="
-    crossorigin=""/>
+        integrity="sha512-hoalWLoI8r4UszCkZ5kL8vayOGVae1oxXe/2A4AO6J9+580uKHDO3JdHb7NzwwzK5xr/Fs0W40kiNHxM9vyTtQ=="
+        crossorigin="" />
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-/bQdsTh/da6pkI1MST/rWKFNjaCP5gBSY4sEBT38Q/9RBh9AH40zEOg7Hlq2THRZ"
         crossorigin="anonymous"></script>
-    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
     <!-- include Leaflet (map) library -->
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
@@ -164,57 +164,79 @@
                             <option value="Yuba">Yuba</option>
                         </select><br />
                         <label for="organization-id" class="control-label"> RCD's Organization ID: </label>
-                        <input type="number" class="form-control" id="organization-id" name="organization-id" placeholder="62"><br>
-                        Find the Organization ID by selecting <a href=https://www.rcdprojects.org/ProjectStewardOrganization/Index>your RCD in the Project Tracker</a> and finding the string of numbers at the end of the URL. 
-                        Example:  <img src="exOrgIDmarkedup.png" alt="View of how to find the Organization ID at the end of the URL" width="500" height="300">  (Please change the sizing of this image so that it looks nice with the columns)
+                        <input type="number" class="form-control" id="organization-id" name="organization-id"
+                            placeholder="62"><br>
+                        Find the Organization ID by selecting <a
+                            href=https://www.rcdprojects.org/ProjectStewardOrganization/Index>your RCD in the Project
+                            Tracker</a> and finding the string of numbers at the end of the URL. Example: 
+                            <img class="img-fluid" src="exOrgIDmarkedupcropped.png"
+                            alt="View of how to find the Organization ID at the end of the URL" width="500"
+                            height="300">
+                        <!-- Button trigger modal -->
+                        <!-- <button type="button" id="open_org_ID_help" class="btn btn-secondary" data-toggle="modal" data-target="#org_ID_help">
+                            Help finding Organization ID
+                        </button> -->
+
                         <!-- <button type="button" class="btn btn-sm btn-outline-info" data-toggle="popover" title="Popover title" data-content="And here's some amazing content. It's very engaging. Right?">Help</button><br /> -->
 
-                        <!-- <label class="control-label" for="boundary-color">Select the color of the RCD Boundary:</label>
-                        <input type="color" class="form-control" id="boundary-color" name="boundary-color"><br /> -->
+                        <!-- <label class="control-label" for="boundary-color">Select the color of the RCD Boundary:</label> -->
+                        <!-- <input type="color" class="form-control" id="boundary-color" name="boundary-color"><br /> -->
                     </form>
                 </section>
 
             </div>
-            <div class="col-sm-2"></div>
+
+            <!-- Modal -->
+            <!-- FIXME: the modal doesn't appear when you click the button. how do i fix i don't know -->
+            <div class="modal fade" id="org_ID_help" role="dialog">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Help</h5>
+                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        </div>
+                        <div class="modal-body">
+                            <p>some text </p>
+                            <img class="img-fluid" src="exOrgIDmarkedupcropped.png"
+                            alt="View of how to find the Organization ID at the end of the URL" width="500"
+                            height="300">
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                          </div>
+                    </div>
+                </div>
+            </div>
+
             <div class="col-sm-6">
-                    <h3>View the results here. If it looks correct, select "print code" </h3>
-                <div id="RCD_map" style="width: 600px; height: 400px;"><script>renderBaseMap();</script></div><br><br>
+                <h3>View the results here. If it looks correct, select "print code" </h3>
+                <div id="RCD_map" style="width: 600px; height: 400px;">
+                    <script>render_basemap();</script>
+                </div><br><br>
                 <button type="button" class="btn btn-success">Print Code</button>
             </div>
         </div>
     </div>
 
     <script>
-
-        document.querySelector('#RCD_name').addEventListener("change", function() {
-            console.log("rcd name in listener", this.value);
-            console.log("RCD_ map", document.getElementById("RCD_map"));
-            renderRCDBoundary(document.getElementById('RCD_map'), this.value); //okay, this.value works now, but not getting the map correctly
+        //when an RCD is selected from drop down, show that RCD on the map preview
+        document.querySelector('#RCD_name').addEventListener("change", function () {
+            render_RCD_boundary(this.value);
         });
-        // $( document ).ready(function(){
-        //     console.log("ready");
-
-        //     $("#RCD_name").change(console.log(this.value)); //FIXME: whatever javascript gibberish I'm trying to pass to renderRCDBoundary here is returning undefined
 
         // }
         // )
         // // // enable popovers in document
         // // $(function () {
         // //     $('[data-toggle="popover"]').popover()
-        // // })  
-        
-        // // update map when dropdown (which RCD) changed
-        // $("#RCD_name").change(renderRCDBoundary($("#RCD_map"), ($(this).children("option:selected").val())));
+        // // })
 
         // // get project data when Organization ID entered
         // $("#organization-id" ).change(function() {
         //     console.log( "Handler for .change() called." );
         // });
+
     </script>
 </body>
 
 </html>
-
-// when choose an RCD 
-// find that RCD from the boundaries
-// draw it on the map and zoom to it 
