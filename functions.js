@@ -1,12 +1,9 @@
-//FIXME: WHY DOES THE MAP GO TO ANTARCTICA FOR CACHUMA RCD 
-// the boundary still draws correctly. it's probably bc cachuma  is disjoint 
-//FIXME: hidden project locations don't go to right place
-
 /**
  * boundingBox returns lat/lon coordinates of the most extreme NW and SE points of an irregular polygon
  * @param coord_array - array of boundary points where each entry is a [long, lat] coordinate 
+ * usage: boundingBox(single_rcd_boundary.geometry.coordinates[0]);
  */
-function boundingBox(coord_array){
+ function boundingBox(coord_array){
     // sort by latitudes descending to find smallest/largest lat
     let sorted_coords = coord_array.slice().sort(function(a, b){return b[1] - a[1]});
     let north_bound = sorted_coords[0][1];
@@ -43,8 +40,7 @@ function render_RCD_boundary(RCD_name){
     let single_RCD_boundary = filter_by_name(RCD_Boundaries, RCD_name); 
 
     // add the desired RCD boundary to map 
-    // global scope
-    current_boundary = L.geoJSON(single_RCD_boundary).addTo(mapReference); 
+    current_boundary = L.geoJSON(single_RCD_boundary).addTo(mapReference); // global scope
     return single_RCD_boundary; 
 }
 
@@ -68,8 +64,14 @@ function update_RCD_boundaries(RCD_name, color){
     //with color 
     set_boundary_color(color); 
 
-    //fly to the right part of the map
     let RCD_coord_array = rcd_boundary.geometry.coordinates[0];
+
+    // need to do this because Cachuma RCD is made of multiple disjoint polygons
+    if (RCD_name == "Cachuma"){
+        var coords = rcd_boundary.geometry.coordinates;
+        RCD_coord_array = coords[0][0].concat(coords[1][0], coords[2][0], coords[3][0]);
+    }
+    //fly to the right part of the map
     mapReference.flyToBounds(boundingBox(RCD_coord_array)); 
 }
 
