@@ -17,7 +17,17 @@
         input[type=number] {
             -moz-appearance: textfield;
         }
+        
+        .small-help {
+            color: rgb(100, 100, 100);
+            font-size: 14px;
+            font-style: italic; 
+        } 
 
+        .topline {
+            font-size: 16px; 
+            font-weight: bold;
+        }
     </style>
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -55,15 +65,16 @@
 
     <div class="container">
         <div class="page-header">
-            <h1>Customize your map </h1>
+            <h1>Create a Project Map for your RCD </h1>
         </div>
 
         <div class="row">
 
-            <div class="col-sm-4">
+            <div class="col-sm-5">
                 <section id="Forms">
-                    <h3>Enter the following information to create your map plug in</h3>
+                    <h3>Enter your information on the left: </h3>
                     <form class="form-horizontal">
+                        <p class='topline'>1. Add an RCD Boundary</p>
                         <label class="control-label" for="RCD_name">RCD Name </label>
                         <select class="form-control" id="RCD_name" required>
                             <option value="Alameda">Alameda</option>
@@ -165,30 +176,32 @@
 
                         <label class="control-label" for="boundary_color">Optional: Change the color of the RCD Boundary</label> 
                         <input type="color" class="form-control form-control-color" id="boundary_color" name="boundary_color" value="#445cf3"><br /> 
-
+                        
+                        
+                        <p class='topline'>2. Add project data </p>
                         <label for="organization_id" class="control-label"> RCD's Organization ID </label>
                         <input type="number" class="form-control" id="organization_id" name="organization_id"
-                            placeholder="62"><br>
+                            placeholder="62">
 
-                        <button type="button" id="get_project_data" class="btn btn-primary btn-sm">Show Project Data</button><br>
-                        <h4>Help</h4>
-                        Find the Organization ID by selecting <a
-                            href=https://www.rcdprojects.org/ProjectStewardOrganization/Index>your RCD in the Project
-                            Tracker</a> and finding the string of numbers at the end of the URL. Example: 
+                        <!-- <button type="button" id="get_project_data" class="btn btn-primary btn-sm">Show Project Data</button><br> -->
+                        <p class="small-help"> Find the Organization ID by selecting <a
+                            href=https://www.rcdprojects.org/ProjectStewardOrganization/Index target="_blank">your RCD in the Project
+                            Tracker</a> and finding the string of numbers at the end of the URL. <br> Example (click to enlarge): 
                             <a href="https://raw.githubusercontent.com/jmkahn/RCD_map_plugins/main/img/exOrgIDmarkedupcropped.png" target="_blank">
-                                <img alt='img_path' class='img-fluid' src='https://raw.githubusercontent.com/jmkahn/RCD_map_plugins/main/img/exOrgIDmarkedupcropped.png' />
-                            </a>
+                                <img alt='help image for finding Organizatin ID' class='img-fluid' src='https://raw.githubusercontent.com/jmkahn/RCD_map_plugins/main/img/exOrgIDmarkedupcropped.png' />
+                            </a> If your RCD is not currently part of the Project Tracker, please request for your RCD to be added to the Project Tracker before creating a map here.</p>
                     </form>
                 </section>
 
             </div>
-            <div class="col-sm-6">
-                <h3>View the results here. If it looks correct, select "print code" </h3>
+            <div class="col-sm-5">
+                <h3>Preview the results on the right: </h3>
                 <div id="RCD_map" style="width: 600px; height: 400px;">
                     <script>render_basemap();</script>
                 </div>
                 Note: some project locations are obscured to protect landowner privacy. Click the popups to view data for specific projects.<br><br>
-                <button type="button" class="btn btn-success">Print Code</button>
+                <h3> When the map looks correct, select "print code"</h3>
+                <button type="button" class="btn btn-success" id="print_code_button">Print Code</button>
             </div>
         </div>
     </div>
@@ -201,18 +214,22 @@
             update_RCD_boundaries(this.value, color);
         });
 
-        // get project data when Organization ID entered
-        document.querySelector('#get_project_data').addEventListener("click", function () { 
-            let org_id = document.getElementById("organization_id").value;
-            render_project_data(org_id); 
-        });
-
         // change RCD Boundary color from input
         document.querySelector('#boundary_color').addEventListener("change", function () {
             if (typeof current_boundary !== 'undefined') {
                 set_boundary_color(this.value);
             }
         });
+
+        document.querySelector('#organization_id').addEventListener("input", function () {
+            let org_id = document.getElementById("organization_id").value;
+            render_project_data(org_id);
+        });
+
+        document.querySelector('#print_code_button').addEventListener("click", function () {
+            print_map_code(RCD_name, org_id, boundary_color); 
+        }); 
+
     </script>
 </body>
 
