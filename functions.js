@@ -107,6 +107,7 @@ function render_basemap(){
  */
 function render_project_data(organization_ID){
 
+    console.log(organization_ID);
     //clear old project markers before showing new ones 
     if (typeof all_projects !== 'undefined') {
         mapReference.removeLayer(all_projects);
@@ -117,8 +118,8 @@ function render_project_data(organization_ID){
     fetch(url)
     .then(response => response.json())
     .then(data => format_json(data))
-    .then(projects => create_project_markers(projects));
-    // FIXME: What i want to do is not proceed if the response is empty 
+    .then(projects => draw_project_markers(projects));
+
 }
 
 function format_json(data){
@@ -134,24 +135,19 @@ function format_json(data){
 // by hand, double escaped internal quotes in description of ProjectID 6343, 6344, 13868
 }
 
-function create_project_markers(projects){
-    console.log("will find center"); 
-    console.log(projects); 
+function draw_project_markers(projects){
     let project_center = find_project_center(projects); 
-    console.log("found center"); 
-    console.log(project_center); 
-    L.marker(project_center).bindPopup("PROJECTCENTER IS HERE").addTo(mapReference);
     let all_project_points = []; 
     for (let i = 0; i < projects.length; i++){
         let latlng; 
         let popup_content = '<p style="font-size:12px;"><a href= https://www.rcdprojects.org' + projects[i].ProjectDetailUrl + ' target="_blank">' + projects[i].ProjectName+ '</a></p> <p style="font-size:10px;">'+ projects[i].ProjectDescription;
-        // don't use projects in proposal stage (not public yet)
-        if (projects[i].Stage !== 'Proposal'){
+        // don't use projects in proposal/deferred stage (not public)
+        if (["Planning/Design", "Implementation", "Post-Implementation", "Completed"].includes(projects[i].Stage)){
             if (projects[i].Latitude && projects[i].Longitude){
                 latlng = [projects[i].Latitude, projects[i].Longitude];
             }else{
                 // assign projects without a location a point around the center of the project region 
-                let jitters = [0.01*(Math.random() - 0.5), 0.02*(Math.random() - 0.5)]; //lng jitter is twice as big bc there are twice as many degrees for lng
+                let jitters = [0.06*(Math.random() - 0.5), 0.12*(Math.random() - 0.5)]; //lng jitter is twice as big bc there are twice as many degrees for lng
                 latlng = [project_center.lat + jitters[0], project_center.lng + jitters[1]];  
                 popup_content = popup_content + '</p><p style="font-style:italic">(True Location hidden) </p>';
             }
@@ -159,22 +155,27 @@ function create_project_markers(projects){
         }
     }
     // make layer group of all projects
-    all_projects = L.featureGroup(all_project_points).addTo(mapReference); //global scope 
+    all_projects = L.featureGroup(all_project_points).addTo(mapReference);
+    mapReference.flyToBounds(all_projects.getBounds()); 
 }
 
 /**
- * 
+ * returns the mean lat/lng value for projects with a location  
  * @param {JSON} projects 
  * returns a Leaflet LatLng object 
  */ 
 function find_project_center(projects){
-    let locations_array = [];
+    let lats = 0; 
+    let lngs = 0;
+    let num_projects = 0; 
     for (let i=0; i<projects.length; i++){
-        if (projects[i].Stage !== 'Proposal'){
+        if (["Planning/Design", "Implementation", "Post-Implementation", "Completed"].includes(projects[i].Stage)){
             if (projects[i].Latitude && projects[i].Longitude){
-                locations_array.push([projects[i].Longitude, projects[i].Latitude]);
+                lats += projects[i].Latitude; 
+                lngs += projects[i].Longitude; 
+                num_projects++; 
             }
         }
     }
-    return L.latLngBounds(boundingBox(locations)).getCenter(boundingBox(locations_array));// FIXME: this doesn't work when weird outlier locations
+    return L.latLng({lng: lngs/num_projects, lat: lats/num_projects});
 }
