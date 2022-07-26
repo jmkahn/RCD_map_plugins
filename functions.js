@@ -24,6 +24,7 @@
  * @param {string} color 
  * @returns 
  */
+
 function print_map_code(rcd_name, organization_ID, color){
     output_code = `<!DOCTYPE html>
     <head>
@@ -63,7 +64,7 @@ function print_map_code(rcd_name, organization_ID, color){
                 };
             }
 
-            let single_RCD_boundary = filter_by_name(RCD_boundaries, ${rcd_name});
+            let single_RCD_boundary = filter_by_name(RCD_boundaries, "${rcd_name}");
 
             var RCD_map = L.map('RCD_map'); 
 
@@ -78,11 +79,11 @@ function print_map_code(rcd_name, organization_ID, color){
             }).addTo(RCD_map);
 
             // add the desired RCD boundary to map 
-            var rcd_boundary = L.geoJSON(single_RCD_boundary, {style: {color: ${color}}}).addTo(RCD_map); 
+            var rcd_boundary = L.geoJSON(single_RCD_boundary, {style: {color: "${color}"}}).addTo(RCD_map); 
             RCD_map.fitBounds(rcd_boundary.getBounds());
 
             function render_project_data(organization_ID){
-                let url = 'https://www.rcdprojects.org/WebServices/GetProjectsByOrganization/JSON/bcdb2d4b-5d7a-4e25-b2e2-7634453c80e8/' + ${organization_ID}; 
+                let url = 'https://www.rcdprojects.org/WebServices/GetProjectsByOrganization/JSON/bcdb2d4b-5d7a-4e25-b2e2-7634453c80e8/' + "${organization_ID}"; 
 
                 fetch(url)
                 .then(response => response.json())
