@@ -18,9 +18,11 @@
 }
 
 //TODO: fake
-function print_map_code(){
-    console.log("test")
-    window.open('map_code.txt', '_blank');
+function print_map_code(rcd_name, organization_ID, color){
+    const fs  = require('fs'); //FIXME: this is a node.js things
+    fs.writeFile('newfile.txt', output_code);
+    console.log("test");
+    window.open('newfile.txt', '_blank');
 }
 
 /**
@@ -92,7 +94,7 @@ function render_basemap(){
     var RCD_map = L.map('RCD_map').fitBounds(california_bounding_box); 
 
     //add base layer 
-    var tiles = L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
+    var tiles = L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoiamthaG4xNjE4IiwiYSI6ImNsNXZvMnZ3OTBibGYzY3A0cDAwOGhudDYifQ.S7Iz_lKck91Rx9L2mxBNlg', {
         maxZoom: 18,
         attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, ' +
             'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
@@ -105,34 +107,41 @@ function render_basemap(){
 /** 
  *  @param {string} organization_ID - numeric string indicating the url of the projects 
  */
-function render_project_data(organization_ID){
+function update_project_data(organization_ID){
 
     console.log(organization_ID);
     //clear old project markers before showing new ones 
     if (typeof all_projects !== 'undefined') {
         mapReference.removeLayer(all_projects);
     }    
+    return render_project_data(organization_ID);
+}
 
+/**
+ * TODO 
+ * @param {*} organization_ID 
+ * @returns 
+ */
+function render_project_data(organization_ID){
     let url = 'https://qa.rcdprojects.org/WebServices/GetProjectsByOrganization/JSON/bcdb2d4b-5d7a-4e25-b2e2-7634453c80e8/' + organization_ID; 
+    //TODO: change to production when that goes online
 
-    fetch(url)
+    //asynch function
+    return fetch(url)
     .then(response => response.json())
     .then(data => format_json(data))
     .then(projects => draw_project_markers(projects));
-
 }
 
 function format_json(data){
-    // copypasted raw JSON from https://www.rcdprojects.org/WebServices/GetProjectsByOrganization/JSON/bcdb2d4b-5d7a-4e25-b2e2-7634453c80e8/62
-// removed unescaped newlines (\n -> )
-    let string_data = JSON.stringify(data);
-    let clean_data = string_data.replace(/\\n/g, '').replace(/\\t/g, ' ').replace(/'/g, "\'").replace(/\\r/g, ' ');
-    return JSON.parse(clean_data);
-// replace tabs with single spaces ( I don't know if this step was necessary)
-// replace all interior ' with escaped (' -> \' )
-// replace / with \/  [ I don't think this was necessary]
-// removed unescaped \r (replace with space)
-// by hand, double escaped internal quotes in description of ProjectID 6343, 6344, 13868
+    if (data.length != 0){
+        //remove unescaped newlines, tabs, \rs; escape interior single quotes 
+        let string_data = JSON.stringify(data);
+        let clean_data = string_data.replace(/\\n/g, '').replace(/\\t/g, ' ').replace(/'/g, "\'").replace(/\\r/g, ' ');
+        return JSON.parse(clean_data);
+    }else{
+        throw "No project data";
+    }
 }
 
 function draw_project_markers(projects){
