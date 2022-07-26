@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
-FIXME: add more padding between elements
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
-        /* disables number spinner on numeric input */
+        /* disable number spinner on numeric input */
         /* for Chrome, Safari, Edge, Opera */
         input::-webkit-outer-spin-button,
         input::-webkit-inner-spin-button {
@@ -17,16 +17,19 @@ FIXME: add more padding between elements
         input[type=number] {
             -moz-appearance: textfield;
         }
-        
+
         .small-help {
             color: rgb(100, 100, 100);
             font-size: 14px;
-            font-style: italic; 
-        } 
+            font-style: italic;
+            padding-top: 6px;
+        }
 
-        .topline {
-            font-size: 16px; 
-            font-weight: bold;
+        .mb-3 {
+            padding-bottom: 10px;
+        }
+        h3{
+            padding-bottom: 10px;
         }
     </style>
 
@@ -53,157 +56,177 @@ FIXME: add more padding between elements
 
     <script type="text/javascript" src="functions.js"></script>
 
-    <title>RCD Map Plugin Creator</title>
+    <title>RCD Map Creator</title>
 </head>
 
 <body>
 
     <div class="jumbotron text-center">
-        <h1>RCD Map Plug in</h1>
-        <p>Add an interactive project map to your website</p>
+        <h1>RCD Project Map Creator</h1>
+        <p>Add an interactive project map using <a href="https://www.rcdprojects.org/" target="_blank">RCD Project Tracker</a> data to your website</p>
     </div>
 
     <div class="container">
-        <div class="page-header">
-            <h1>Create a Project Map for your RCD </h1>
-        </div>
-
         <div class="row">
 
-            <div class="col-sm-5">
+            <div class="col-4">
                 <section id="Forms">
-                    <h3>Enter your information on the left: </h3>
-                    <form class="form-horizontal">
-                        <p class='topline'>1. Add an RCD Boundary</p>
-                        <label class="control-label" for="RCD_name">RCD Name </label>
-                        <select class="form-control" id="RCD_name" required>
-                            <option value="Alameda">Alameda</option>
-                            <option value="Alpine">Alpine</option>
-                            <option value="Amador">Amador</option>
-                            <option value="Antelope Valley">Antelope Valley</option>
-                            <option value="Bard">Bard</option>
-                            <option value="Butte">Butte</option>
-                            <option value="Cachuma">Cachuma</option>
-                            <option value="Calaveras">Calaveras</option>
-                            <option value="Coachella Valley">Coachella Valley</option>
-                            <option value="Coarsegold">Coarsegold</option>
-                            <option value="Coastal San Luis">Coastal San Luis</option>
-                            <option value="Columbia">Columbia</option>
-                            <option value="Colusa">Colusa</option>
-                            <option value="Contra Costa">Contra Costa</option>
-                            <option value="Del Norte">Del Norte</option>
-                            <option value="Dixon">Dixon</option>
-                            <option value="East Merced">East Merced</option>
-                            <option value="East Stanislaus">East Stanislaus</option>
-                            <option value="Eastern Kern">Eastern Kern</option>
-                            <option value="El Dorado County">El Dorado County</option>
-                            <option value="Excelesior-Kings River">Excelesior-Kings River</option>
-                            <option value="Fall River">Fall River</option>
-                            <option value="Feather River">Feather River</option>
-                            <option value="Firebaugh">Firebaugh</option>
-                            <option value="Florin">Florin</option>
-                            <option value="Georgetown Divide">Georgetown Divide</option>
-                            <option value="Glenn">Glenn</option>
-                            <option value="Gold Ridge">Gold Ridge</option>
-                            <option value="Goose Lake">Goose Lake</option>
-                            <option value="Grassland">Grassland</option>
-                            <option value="Greater San Diego">Greater San Diego</option>
-                            <option value="Guadalupe-Coyote">Guadalupe-Coyote</option>
-                            <option value="Gustine-Romero">Gustine-Romero</option>
-                            <option value="Honey Lake">Honey Lake</option>
-                            <option value="Humboldt">Humboldt</option>
-                            <option value="Imperial Irrigation Dst">Imperial Irrigation District</option>
-                            <option value="Inland Empire">Inland Empire</option>
-                            <option value="Inyo-Mono">Inyo-Mono</option>
-                            <option value="James">James</option>
-                            <option value="Kern Valley">Kern Valley</option>
-                            <option value="Lake County">Lake County</option>
-                            <option value="Lava Beds-Butte Valley">Lava Beds-Butte Valley</option>
-                            <option value="Loma Prieta">Loma Prieta</option>
-                            <option value="Los Banos">Los Banos</option>
-                            <option value="Lower Consumnes">Lower Consumnes</option>
-                            <option value="Madera Chowchilla">Madera Chowchilla</option>
-                            <option value="Marin">Marin</option>
-                            <option value="Mariposa">Mariposa</option>
-                            <option value="Mendocino">Mendocino</option>
-                            <option value="Mission">Mission</option>
-                            <option value="Modoc">Modoc</option>
-                            <option value="Mojave Desert">Mojave Desert</option>
-                            <option value="Mono">Mono</option>
-                            <option value="Monterey">Monterey</option>
-                            <option value="Napa">Napa</option>
-                            <option value="Nevada County">Nevada County</option>
-                            <option value="North West Kern">North West Kern</option>
-                            <option value="Palo Verde">Palo Verde</option>
-                            <option value="Panoche">Panoche</option>
-                            <option value="Pit">Pit</option>
-                            <option value="Placer">Placer</option>
-                            <option value="Riverside-Corona">Riverside-Corona</option>
-                            <option value="San Benito">San Benito</option>
-                            <option value="San Jacinto Basin">San Jacinto Basin</option>
-                            <option value="San Joaquin">San Joaquin</option>
-                            <option value="San Luis">San Luis</option>
-                            <option value="San Mateo">San Mateo</option>
-                            <option value="Santa Cruz">Santa Cruz</option>
-                            <option value="Santa Monica Mountains">Santa Monica Mountains</option>
-                            <option value="Shasta Valley">Shasta Valley</option>
-                            <option value="Sierra">Sierra</option>
-                            <option value="Sierra Valley">Sierra Valley</option>
-                            <option value="Siskiyou">Siskiyou</option>
-                            <option value="Sloughhouse">Sloughhouse</option>
-                            <option value="Solono">Solano</option>
-                            <option value="Sonoma">Sonoma</option>
-                            <option value="Suisun">Suisun</option>
-                            <option value="Sutter">Sutter</option>
-                            <option value="Tahoe">Tahoe</option>
-                            <option value="Tehachapi">Tehachapi</option>
-                            <option value="Tehama">Tehama</option>
-                            <option value="Tem_Elsinore-Murrieta-Anza">Temecula-Elsinore-Murrieta-Anza</option>
-                            <option value="Tranquility">Tranquility</option>
-                            <option value="Trinity">Trinity</option>
-                            <option value="Tulare">Tulare</option>
-                            <option value="Tulare Lake">Tulare Lake</option>
-                            <option value="Tuolumne">Tuolumne</option>
-                            <option value="Upper Salinas-Las Tablas">Upper Salinas-Las Tablas</option>
-                            <option value="Upper San Luis Rey">Upper San Luis Rey</option>
-                            <option value="Ventura">Ventura</option>
-                            <option value="West Stanislaus">West Stanislaus</option>
-                            <option value="Western Shasta">Western Shasta</option>
-                            <option value="Westside">Westside</option>
-                            <option value="Yolo">Yolo</option>
-                            <option value="Yuba">Yuba</option>
-                        </select><br />
+                    <div class="mb-3">
+                        <h3>Enter your information </h3>
+                        <form class="form-horizontal">
+                            <label class="control-label" for="RCD_name">RCD Name </label>
+                            <select class="form-control" id="RCD_name" required>
+                                <option value="Alameda">Alameda</option>
+                                <option value="Alpine">Alpine</option>
+                                <option value="Amador">Amador</option>
+                                <option value="Antelope Valley">Antelope Valley</option>
+                                <option value="Bard">Bard</option>
+                                <option value="Butte">Butte</option>
+                                <option value="Cachuma">Cachuma</option>
+                                <option value="Calaveras">Calaveras</option>
+                                <option value="Coachella Valley">Coachella Valley</option>
+                                <option value="Coarsegold">Coarsegold</option>
+                                <option value="Coastal San Luis">Coastal San Luis</option>
+                                <option value="Columbia">Columbia</option>
+                                <option value="Colusa">Colusa</option>
+                                <option value="Contra Costa">Contra Costa</option>
+                                <option value="Del Norte">Del Norte</option>
+                                <option value="Dixon">Dixon</option>
+                                <option value="East Merced">East Merced</option>
+                                <option value="East Stanislaus">East Stanislaus</option>
+                                <option value="Eastern Kern">Eastern Kern</option>
+                                <option value="El Dorado County">El Dorado County</option>
+                                <option value="Excelesior-Kings River">Excelesior-Kings River</option>
+                                <option value="Fall River">Fall River</option>
+                                <option value="Feather River">Feather River</option>
+                                <option value="Firebaugh">Firebaugh</option>
+                                <option value="Florin">Florin</option>
+                                <option value="Georgetown Divide">Georgetown Divide</option>
+                                <option value="Glenn">Glenn</option>
+                                <option value="Gold Ridge">Gold Ridge</option>
+                                <option value="Goose Lake">Goose Lake</option>
+                                <option value="Grassland">Grassland</option>
+                                <option value="Greater San Diego">Greater San Diego</option>
+                                <option value="Guadalupe-Coyote">Guadalupe-Coyote</option>
+                                <option value="Gustine-Romero">Gustine-Romero</option>
+                                <option value="Honey Lake">Honey Lake</option>
+                                <option value="Humboldt">Humboldt</option>
+                                <option value="Imperial Irrigation Dst">Imperial Irrigation District</option>
+                                <option value="Inland Empire">Inland Empire</option>
+                                <option value="Inyo-Mono">Inyo-Mono</option>
+                                <option value="James">James</option>
+                                <option value="Kern Valley">Kern Valley</option>
+                                <option value="Lake County">Lake County</option>
+                                <option value="Lava Beds-Butte Valley">Lava Beds-Butte Valley</option>
+                                <option value="Loma Prieta">Loma Prieta</option>
+                                <option value="Los Banos">Los Banos</option>
+                                <option value="Lower Consumnes">Lower Consumnes</option>
+                                <option value="Madera Chowchilla">Madera Chowchilla</option>
+                                <option value="Marin">Marin</option>
+                                <option value="Mariposa">Mariposa</option>
+                                <option value="Mendocino">Mendocino</option>
+                                <option value="Mission">Mission</option>
+                                <option value="Modoc">Modoc</option>
+                                <option value="Mojave Desert">Mojave Desert</option>
+                                <option value="Mono">Mono</option>
+                                <option value="Monterey">Monterey</option>
+                                <option value="Napa">Napa</option>
+                                <option value="Nevada County">Nevada County</option>
+                                <option value="North West Kern">North West Kern</option>
+                                <option value="Palo Verde">Palo Verde</option>
+                                <option value="Panoche">Panoche</option>
+                                <option value="Pit">Pit</option>
+                                <option value="Placer">Placer</option>
+                                <option value="Riverside-Corona">Riverside-Corona</option>
+                                <option value="San Benito">San Benito</option>
+                                <option value="San Jacinto Basin">San Jacinto Basin</option>
+                                <option value="San Joaquin">San Joaquin</option>
+                                <option value="San Luis">San Luis</option>
+                                <option value="San Mateo">San Mateo</option>
+                                <option value="Santa Cruz">Santa Cruz</option>
+                                <option value="Santa Monica Mountains">Santa Monica Mountains</option>
+                                <option value="Shasta Valley">Shasta Valley</option>
+                                <option value="Sierra">Sierra</option>
+                                <option value="Sierra Valley">Sierra Valley</option>
+                                <option value="Siskiyou">Siskiyou</option>
+                                <option value="Sloughhouse">Sloughhouse</option>
+                                <option value="Solono">Solano</option>
+                                <option value="Sonoma">Sonoma</option>
+                                <option value="Suisun">Suisun</option>
+                                <option value="Sutter">Sutter</option>
+                                <option value="Tahoe">Tahoe</option>
+                                <option value="Tehachapi">Tehachapi</option>
+                                <option value="Tehama">Tehama</option>
+                                <option value="Tem_Elsinore-Murrieta-Anza">Temecula-Elsinore-Murrieta-Anza</option>
+                                <option value="Tranquility">Tranquility</option>
+                                <option value="Trinity">Trinity</option>
+                                <option value="Tulare">Tulare</option>
+                                <option value="Tulare Lake">Tulare Lake</option>
+                                <option value="Tuolumne">Tuolumne</option>
+                                <option value="Upper Salinas-Las Tablas">Upper Salinas-Las Tablas</option>
+                                <option value="Upper San Luis Rey">Upper San Luis Rey</option>
+                                <option value="Ventura">Ventura</option>
+                                <option value="West Stanislaus">West Stanislaus</option>
+                                <option value="Western Shasta">Western Shasta</option>
+                                <option value="Westside">Westside</option>
+                                <option value="Yolo">Yolo</option>
+                                <option value="Yuba">Yuba</option>
+                            </select>
+                    </div>
+                    <div class="mb-3">
 
-                        <label class="control-label" for="boundary_color">Optional: Change the color of the RCD Boundary</label> 
-                        <input type="color" class="form-control form-control-color" id="boundary_color" name="boundary_color" value="#445cf3"><br /> 
-                        <p class='topline'>2. Add project data </p>
-                        <label for="organization_id" class="control-label"> RCD's Organization ID </label></br>
+                        <label class="control-label" for="boundary_color">RCD Boundary Color</label>
+                        <input type="color" class="form-control form-control-color" id="boundary_color"
+                            name="boundary_color" value="#445cf3">
+                    </div>
+                    <div class="mb-3">
+
+                        <label for="organization_id" class="control-label"> RCD Organization ID </label>
                         <input type="number" class="form-control" id="organization_id" name="organization_id"
-                            placeholder="Organization ID">    
-                            <div class="invalid-feedback">
-                                Please provide a valid Organization ID.
-                              </div>
-                            </input>
-                        <p class="small-help"> Find the Organization ID by selecting <a
-                            href=https://www.rcdprojects.org/ProjectStewardOrganization/Index target="_blank">your RCD in the Project
-                            Tracker</a> and finding the string of numbers at the end of the URL. <br> Example (click to enlarge): 
-                            <a href="https://raw.githubusercontent.com/jmkahn/RCD_map_plugins/main/img/exOrgIDmarkedupcropped.png" target="_blank">
-                                <img alt='help image for finding Organization ID' class='img-fluid' src='https://raw.githubusercontent.com/jmkahn/RCD_map_plugins/main/img/exOrgIDmarkedupcropped.png' />
-                            </a> If your RCD is not currently part of the Project Tracker, please request for your RCD to be added by selecting the "Request Support" button <a href="https://www.rcdprojects.org/Home/Training" target="_blank">from under the Help menu. </a></p>
+                            placeholder="Organization ID">
+                        <div class="invalid-feedback">
+                            Please provide a valid Organization ID.
+                        </div>
+                        </input>
+
+                        <p class="small-help"> Find your RCD's Organization ID by selecting <a
+                                href=https://www.rcdprojects.org/ProjectStewardOrganization/Index target="_blank">your
+                                RCD in the Project
+                                Tracker</a> and finding the string of numbers at the end of the URL. <br> Example (click
+                            to enlarge):
+                            <a href="https://raw.githubusercontent.com/jmkahn/RCD_map_plugins/main/img/exOrgIDmarkedupcropped.png"
+                                target="_blank">
+                                <img alt='help image for finding Organization ID' class='img-fluid'
+                                    src='https://raw.githubusercontent.com/jmkahn/RCD_map_plugins/main/img/exOrgIDmarkedupcropped.png' />
+                            </a> If your RCD is not currently part of the Project Tracker, please request for your RCD
+                            to be added by selecting the "Request Support" button <a
+                                href="https://www.rcdprojects.org/Home/Training" target="_blank">from under the Help
+                                menu. </a>
+                        </p>
+                    </div>
+
                     </form>
                 </section>
 
             </div>
-            <div class="col-sm-5">
-                <h3>Preview the results on the right: </h3>
-                <div id="RCD_map" style="width: 600px; height: 400px;">
+            <div class="col-6">
+                <h3>Preview the map</h3>
+                <div id="RCD_map" style="height: 400px;">
                     <script>render_basemap();</script>
                 </div>
-                Note: some project locations are obscured to protect landowner privacy. Click the popups to view data for specific projects.<br><br>
-                <h3> When the map looks correct, select "print code"</h3>
+                <p class="small-help">Note: some project locations are obscured to protect landowner privacy.<br> Click the popups to
+                    view data for specific projects.</p>
+            </div>
+            <div class="col-2">
+                <h3>Finish</h3>
                 <button type="button" class="btn btn-success" id="print_code_button">Print Code</button>
+                <p class="small-help">When the preview looks correct, select "Print Code" to get the code for this map. Copy and paste this code into your website.</p>
             </div>
         </div>
+    </div>
+    <div class="text-center p-4" style="background-color: rgba(0, 0, 0, 0.05);">
+        © 2022 Copyright:
+        <a class="text-reset fw-bold" href="https://github.com/jmkahn/RCD_map_plugins/">Jenna Kahn</a>
     </div>
 
     <script>
@@ -223,7 +246,7 @@ FIXME: add more padding between elements
 
         document.querySelector('#organization_id').addEventListener("input", function () {
             let org_id = document.getElementById("organization_id").value;
-            update_project_data(org_id).catch(function (error){
+            update_project_data(org_id).catch(function (error) {
                 document.getElementById('organization_id').className = "form-control is-invalid";
             });
             document.getElementById('organization_id').className = "form-control";
@@ -237,9 +260,9 @@ FIXME: add more padding between elements
             console.log(org_id);
             console.log(RCD_name);
             console.log(boundary_color);
-            print_map_code(RCD_name, org_id, boundary_color); 
-            //TODO: none of this shit works yet 
-        }); 
+            print_map_code(RCD_name, org_id, boundary_color);
+            //TODO: none of this  works yet 
+        });
 
     </script>
 </body>
