@@ -210,7 +210,7 @@ function render_basemap(){
             'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
         id: 'mapbox/streets-v11',
         tileSize: 512,
-        zoomOffset: -1
+        zoomOffset: -1 
     }).addTo(RCD_map);
 }
 
@@ -227,11 +227,6 @@ function update_project_data(organization_ID){
     return render_project_data(organization_ID);
 }
 
-/**
- * TODO 
- * @param {*} organization_ID 
- * @returns 
- */
 function render_project_data(organization_ID){
     let url = base_url + organization_ID; 
 
