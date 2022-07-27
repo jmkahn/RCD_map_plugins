@@ -1,3 +1,7 @@
+let base_url = 'https://qa.rcdprojects.org/WebServices/GetProjectsByOrganization/JSON/bcdb2d4b-5d7a-4e25-b2e2-7634453c80e8/';
+//TODO: change to production when that goes online
+
+
 /**
  * boundingBox returns lat/lon coordinates of the most extreme NW and SE points of an irregular polygon
  * @param coord_array - array of boundary points where each entry is a [long, lat] coordinate 
@@ -22,10 +26,11 @@
  * @param {string} rcd_name 
  * @param {string} organization_ID 
  * @param {string} color 
+ * @param {LatLngBounds} current_map_extent - Leaflet LatLngBounds object
  * @returns 
  */
-
-function print_map_code(rcd_name, organization_ID, color){
+function print_map_code(rcd_name, organization_ID, color, current_map_extent){
+    let map_extent_array = [[current_map_extent.getNorth(), current_map_extent.getEast()], [current_map_extent.getSouth(), current_map_extent.getWest()]];
     output_code = `<!DOCTYPE html>
     <head>
         <meta charset="utf-8" />
@@ -37,7 +42,7 @@ function print_map_code(rcd_name, organization_ID, color){
             USERS: Change this if you want to resize the map */
             #RCD_map {
                 height: 360px;
-                width: 450px
+                width: 480px;
             }
         </style>
 
@@ -80,10 +85,10 @@ function print_map_code(rcd_name, organization_ID, color){
 
             // add the desired RCD boundary to map 
             var rcd_boundary = L.geoJSON(single_RCD_boundary, {style: {color: "${color}"}}).addTo(RCD_map); 
-            RCD_map.fitBounds(rcd_boundary.getBounds());
+            RCD_map.fitBounds([[${map_extent_array[0]}], [${map_extent_array[1]}]]);
 
             function render_project_data(organization_ID){
-                let url = 'https://www.rcdprojects.org/WebServices/GetProjectsByOrganization/JSON/bcdb2d4b-5d7a-4e25-b2e2-7634453c80e8/' + "${organization_ID}"; 
+                let url = "${base_url}" + "${organization_ID}"; 
 
                 fetch(url)
                 .then(response => response.json())
@@ -228,8 +233,7 @@ function update_project_data(organization_ID){
  * @returns 
  */
 function render_project_data(organization_ID){
-    let url = 'https://qa.rcdprojects.org/WebServices/GetProjectsByOrganization/JSON/bcdb2d4b-5d7a-4e25-b2e2-7634453c80e8/' + organization_ID; 
-    //TODO: change to production when that goes online
+    let url = base_url + organization_ID; 
 
     //asynch function
     return fetch(url)

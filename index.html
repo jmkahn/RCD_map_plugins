@@ -249,7 +249,8 @@
 
         document.querySelector('#organization_id').addEventListener("input", function () {
             let org_id = document.getElementById("organization_id").value;
-            update_project_data(org_id).catch(function (error) {
+            update_project_data(org_id)
+            .catch(function (error) {
                 document.getElementById('organization_id').className = "form-control is-invalid";
             });
             document.getElementById('organization_id').className = "form-control";
@@ -260,11 +261,8 @@
             let org_id = document.getElementById("organization_id").value;
             let RCD_name = document.getElementById("RCD_name").value;
             let boundary_color = document.getElementById("boundary_color").value;
-            console.log(org_id);
-            console.log(RCD_name);
-            console.log(boundary_color);
-            print_map_code(RCD_name, org_id, boundary_color);
-            //TODO: none of this  works yet 
+            let current_map_extent = mapReference.getBounds();
+            print_map_code(RCD_name, org_id, boundary_color, current_map_extent);
         });
 
     </script>
