@@ -248,6 +248,7 @@
         });
 
         document.querySelector('#organization_id').addEventListener("input", function () {
+            document.getElementById('organization_id').className = "form-control";
             let org_id = document.getElementById("organization_id").value;
             update_project_data(org_id)
             .catch(function (error) {
