@@ -1,6 +1,4 @@
-let base_url = 'https://qa.rcdprojects.org/WebServices/GetProjectsByOrganization/JSON/bcdb2d4b-5d7a-4e25-b2e2-7634453c80e8/';
-//TODO: change to production when that goes online
-
+let base_url = 'https://www.rcdprojects.org/WebServices/GetProjectsByOrganization/JSON/bcdb2d4b-5d7a-4e25-b2e2-7634453c80e8/';
 
 /**
  * boundingBox returns lat/lon coordinates of the most extreme NW and SE points of an irregular polygon
