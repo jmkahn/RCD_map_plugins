@@ -1,7 +1,7 @@
 # Readme 
 
 Go here: [https://jmkahn.github.io/RCD_map_plugins/](https://jmkahn.github.io/RCD_map_plugins/)
-(still in progress)
+
 
 ## Repository Contents
 ### index.html 
