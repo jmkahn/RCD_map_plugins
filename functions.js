@@ -90,19 +90,8 @@ function print_map_code(rcd_name, organization_ID, color, current_map_extent){
 
                 fetch(url)
                 .then(response => response.json())
-                .then(data => format_json(data))
                 .then(projects => draw_project_markers(projects))
             }
-            function format_json(data){
-                if (data.length != 0){
-                    //remove unescaped newlines, tabs, \rs; escape interior single quotes 
-                    let string_data = JSON.stringify(data);
-                    let clean_data = string_data.replace(/\\n/g, '').replace(/\\t/g, ' ').replace(/'/g, "\'").replace(/\\r/g, ' ');
-                    return JSON.parse(clean_data);
-                }else{
-                    throw "No project data";
-                }
-            }   
             function find_project_center(projects){
                 let lats = 0; 
                 let lngs = 0;
@@ -256,19 +245,7 @@ function render_project_data(organization_ID){
     //asynch function
     return fetch(url)
     .then(response => response.json())
-    .then(data => format_json(data))
     .then(projects => draw_project_markers(projects));
-}
-
-function format_json(data){
-    if (data.length != 0){
-        //remove unescaped newlines, tabs, \rs; escape interior single quotes 
-        let string_data = JSON.stringify(data);
-        let clean_data = string_data.replace(/\\n/g, '').replace(/\\t/g, ' ').replace(/'/g, "\'").replace(/\\r/g, ' ');
-        return JSON.parse(clean_data);
-    }else{
-        throw "No project data";
-    }
 }
 
 function draw_project_markers(projects){
