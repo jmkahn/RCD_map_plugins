@@ -93,6 +93,31 @@ function print_map_code(rcd_name, organization_ID, color, current_map_extent){
                 .then(data => format_json(data))
                 .then(projects => draw_project_markers(projects))
             }
+            function format_json(data){
+                if (data.length != 0){
+                    //remove unescaped newlines, tabs, \rs; escape interior single quotes 
+                    let string_data = JSON.stringify(data);
+                    let clean_data = string_data.replace(/\\n/g, '').replace(/\\t/g, ' ').replace(/'/g, "\'").replace(/\\r/g, ' ');
+                    return JSON.parse(clean_data);
+                }else{
+                    throw "No project data";
+                }
+            }   
+            function find_project_center(projects){
+                let lats = 0; 
+                let lngs = 0;
+                let num_projects = 0; 
+                for (let i=0; i<projects.length; i++){
+                    if (["Planning/Design", "Implementation", "Post-Implementation", "Completed"].includes(projects[i].Stage)){
+                        if (projects[i].Latitude && projects[i].Longitude){
+                            lats += projects[i].Latitude; 
+                            lngs += projects[i].Longitude; 
+                            num_projects++; 
+                        }
+                    }
+                }
+                return L.latLng({lng: lngs/num_projects, lat: lats/num_projects});
+            }
             function draw_project_markers(projects){
                 let project_center = find_project_center(projects); 
                 let all_project_points = []; 
