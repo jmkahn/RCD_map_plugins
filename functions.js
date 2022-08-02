@@ -50,7 +50,6 @@ function print_map_code(rcd_name, organization_ID, color, current_map_extent){
         <!-- load the boundaries for all RCDs
         The file is hosted on Github Gist, but getting the content from https://statically.io/ -->
         <script type="text/javascript" src="https://cdn.statically.io/gist/jmkahn/6533a7e7eb4b2f3994881892dae9dae8/raw/1800f19f8b2a61a978d559e7df418f8feec69429/RCD_Boundaries.js"></script>
-        <script type="text/javascript" src="functions.js"></script>
         
     </head>
 
