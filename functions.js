@@ -218,8 +218,9 @@ function render_basemap(){
     //add base layer 
     var tiles = L.tileLayer('https://api.mapbox.com/styles/v1/{id}/tiles/{z}/{x}/{y}?access_token=pk.eyJ1IjoiamthaG4xNjE4IiwiYSI6ImNsNXZvMnZ3OTBibGYzY3A0cDAwOGhudDYifQ.S7Iz_lKck91Rx9L2mxBNlg', {
         maxZoom: 18,
-        attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, ' +
-            'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+        attribution: 'Project data retrieved from<a href="https://www.rcdprojects.org">RCD Project Tracker</a>, '+
+                    'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, ' +
+                    'Imagery &copy;<a href="https://www.mapbox.com/">Mapbox</a>',
         id: 'mapbox/streets-v11',
         tileSize: 512,
         zoomOffset: -1 
