@@ -19,13 +19,13 @@ let base_url = 'https://www.rcdprojects.org/WebServices/GetProjectsByOrganizatio
     return [[north_bound, west_bound], [south_bound, east_bound]];
 }
 /**
- * Function for generating a text file URL containing given text
+ * Function for generating a text file URL containing the HTML to create a project tracker map
  * source: https://www.linuxscrew.com/javascript-write-to-file
  * @param {string} rcd_name 
  * @param {string} organization_ID 
  * @param {string} color 
  * @param {LatLngBounds} current_map_extent - Leaflet LatLngBounds object
- * @returns 
+ * @returns {string} URL 
  */
 function print_map_code(rcd_name, organization_ID, color, current_map_extent){
     let map_extent_array = [[current_map_extent.getNorth(), current_map_extent.getEast()], [current_map_extent.getSouth(), current_map_extent.getWest()]];
